@@ -76,7 +76,7 @@ fun Application.module() {
     }
 
     routing {
-        get("/") {
+        get("/heritages") {
             call.respond(
                 listOf(
                     Heritage(
