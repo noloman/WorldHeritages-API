@@ -3,12 +3,6 @@ package me.manulorenzo.worldheritages_api
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.jetty.Jetty
-import io.ktor.client.features.json.GsonSerializer
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.logging.LogLevel
-import io.ktor.client.features.logging.Logging
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
 import io.ktor.features.ContentNegotiation
@@ -16,16 +10,12 @@ import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
 import io.ktor.gson.gson
 import io.ktor.locations.KtorExperimentalLocationsAPI
-import io.ktor.locations.Location
 import io.ktor.locations.Locations
-import io.ktor.locations.get
 import io.ktor.request.path
 import io.ktor.response.respond
-import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.jetty.EngineMain
-import kotlinx.coroutines.runBlocking
 import me.manulorenzo.worldheritages_api.data.model.Heritage
 import org.slf4j.event.Level
 import java.text.DateFormat
@@ -37,42 +27,19 @@ fun Application.module() {
     install(Compression)
     install(Locations) {
     }
-
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
     }
-
     install(DataConversion)
-
     install(DefaultHeaders) {
         header("X-Engine", "Ktor") // will send this header with each response
     }
-
     install(ContentNegotiation) {
         gson {
             setDateFormat(DateFormat.LONG)
             setPrettyPrinting()
         }
-    }
-
-    HttpClient(Jetty) {
-        install(JsonFeature) {
-            serializer = GsonSerializer()
-        }
-        install(Logging) {
-            level = LogLevel.HEADERS
-        }
-    }
-    runBlocking {
-        // Sample for making a HTTP Client request
-        /*
-        val message = client.post<JsonSampleClass> {
-            url("http://127.0.0.1:8080/path/to/endpoint")
-            contentType(ContentType.Application.Json)
-            body = JsonSampleClass(hello = "world")
-        }
-        */
     }
 
     routing {
@@ -98,37 +65,6 @@ fun Application.module() {
                 )
             )
         }
-
-        get<MyLocation> {
-            call.respondText("Location: name=${it.name}, arg1=${it.arg1}, arg2=${it.arg2}")
-        }
-        // Register nested routes
-        get<Type.Edit> {
-            call.respondText("Inside $it")
-        }
-        get<Type.List> {
-            call.respondText("Inside $it")
-        }
-
-        get("/json/gson") {
-            call.respond(mapOf("hello" to "world"))
-        }
     }
 }
-
-@KtorExperimentalLocationsAPI
-@Location("/location/{name}")
-class MyLocation(val name: String, val arg1: Int = 42, val arg2: String = "default")
-
-@KtorExperimentalLocationsAPI
-@Location("/type/{name}")
-data class Type(val name: String) {
-    @Location("/edit")
-    data class Edit(val type: Type)
-
-    @Location("/list/{page}")
-    data class List(val type: Type, val page: Int)
-}
-
-data class JsonSampleClass(val hello: String)
 
