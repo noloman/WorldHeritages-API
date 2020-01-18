@@ -15,7 +15,7 @@ object HeritagesTable : Table() {
     val lng: Column<Double> = double("lng")
     val page: Column<String> = varchar("page", length = 255)
     val image: Column<String> = varchar("image", length = 255)
-    val imageAuthor: Column<String> = varchar("imageAuthor", length = 255)
+    val imageAuthor: Column<String> = text("imageAuthor")
     val shortInfo: Column<String> = text("shortInfo")
     val longInfo: Column<String> = text("longInfo")
 }
