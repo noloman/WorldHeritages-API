@@ -13,6 +13,9 @@ import io.ktor.locations.Locations
 import io.ktor.request.path
 import io.ktor.routing.routing
 import io.ktor.server.jetty.EngineMain
+import kotlinx.coroutines.launch
+import me.manulorenzo.worldheritages_api.api.data.ParsingManager
+import me.manulorenzo.worldheritages_api.api.data.model.Heritage
 import me.manulorenzo.worldheritages_api.api.repository.DatabaseFactory
 import me.manulorenzo.worldheritages_api.api.repository.HeritagesRepository
 import me.manulorenzo.worldheritages_api.api.routes.heritages
@@ -40,8 +43,12 @@ fun Application.module() {
     }
 
     DatabaseFactory.init()
-
     val db = HeritagesRepository()
+
+    launch {
+        val heritagesJsonList: List<Heritage> = ParsingManager.parse()
+        db.insertAll(heritagesJsonList)
+    }
 
     routing {
         heritages(db)
