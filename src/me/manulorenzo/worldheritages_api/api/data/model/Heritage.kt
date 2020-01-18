@@ -1,4 +1,4 @@
-package me.manulorenzo.worldheritages_api.data.model
+package me.manulorenzo.worldheritages_api.api.data.model
 
 data class Heritage(
     val id: String,
@@ -8,7 +8,6 @@ data class Heritage(
     val type: String,
     val region: String,
     val regionLong: String,
-//    val coordinates: Coordinates, // "N0 0 14 W78 30 0"
     val lat: Double, // 0.0038888888888888888
     val lng: Double, // -78.5
     val page: String, //"http://whc.unesco.org/en/list/2"
