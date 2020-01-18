@@ -1,7 +1,6 @@
 package me.manulorenzo.worldheritages_api
 
 import io.ktor.application.Application
-import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
@@ -32,9 +31,7 @@ fun Application.module() {
         filter { call -> call.request.path().startsWith("/") }
     }
     install(DataConversion)
-    install(DefaultHeaders) {
-        header("X-Engine", "Ktor") // will send this header with each response
-    }
+    install(DefaultHeaders)
     install(ContentNegotiation) {
         gson {
             setDateFormat(DateFormat.LONG)
