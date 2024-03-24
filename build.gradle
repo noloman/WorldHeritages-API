@@ -4,7 +4,7 @@ buildscript {
     ext.logback_version = '1.5.3'
     ext.exposed_version = '0.17.14'
     ext.hikaricp_version = '3.4.5'
-    ext.postgres_version = '42.2.6'
+    ext.postgres_version = '42.7.3'
 
     repositories {
         jcenter()
