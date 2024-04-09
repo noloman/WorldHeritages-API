@@ -1,7 +1,7 @@
 buildscript {
     ext.ktor_version = '2.3.10'
     ext.kotlin_version = '1.9.23'
-    ext.logback_version = '1.5.3'
+    ext.logback_version = '1.5.4'
     ext.exposed_version = '0.17.14'
     ext.hikaricp_version = '5.1.0'
     ext.postgres_version = '42.7.3'
