@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_version = '2.0.21'
     ext.logback_version = '1.5.12'
     ext.exposed_version = '0.17.14'
-    ext.hikaricp_version = '6.1.0'
+    ext.hikaricp_version = '6.2.0'
     ext.postgres_version = '42.7.4'
 
     repositories {
